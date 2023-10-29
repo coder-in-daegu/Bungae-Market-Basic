@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% for item in prod_list %}
+    <div class="img_info">
+        <img src="{{ item['prod_image'] }}" width="256">
+        <h1>{{ item['prod_name'] }}</h1>
+        <h2>{{ item['prod_price'] }}원</h2>
+    </div>
+    {% endfor %}
+</body>
+
+<script>
+    function notprod() {
+        alert("없는 제품입니다!")
+    }
+</script>
+<style>
+    .img_info{
+        position: absolute;
+        left: 25%;
+        top: 20%;
+    }
+</style>
+</html>

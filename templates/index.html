@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="app">
+        <div class="container">
+            <div class="user-info-wrapper">대한민국, 대구에 있는 <span><span id="user_name">{{user_name}}</span>를 위한 상품이에요!</span></div>      
+
+            <div class="wrapper">
+                {% for item in prod_list %}
+                    {% if item['prod_status'] == '0' %}
+                        <div class="items" id="{{item['prod_code']}}" data-id="{{item['prod_code']}}">
+                            <div class="prod">
+                                <div class="image">
+                                        <img src="{{ item['prod_image'] }}" width="160" height="160">
+                                    {% if item['prod_authed'] == '1' %}
+                                        <span class="authed">인증</span>
+                                    {% else %}
+                                        <span class="not_authed">위험</span>
+                                    {% endif %}
+                                </div>
+                                <div class="info">
+                                    <span class="prod_name">{{ item['prod_name'] }}</span>
+                                    <span class="prod_price">{{ item['prod_price'] }}원</span>
+                                </div>  
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+{% for item in prod_list %}
+<script>
+    $(document).ready(function(){
+            $(`#{{item['prod_code']}}`).click(function(){
+    
+            $(location).attr('href', `http://127.0.0.1:4000/prod/${$('#{{item['prod_code']}}').data('id')}`);
+
+            });
+        });
+</script>
+{% endfor %}
+<style>
+    body{
+        font-family: Pretendard;
+    }
+    .wrapper{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%;
+        height: auto;
+    }
+    .authed{
+        background-color: rgb(209, 0, 0); color: white;
+        position: absolute;
+        left: 7px;
+        bottom: 12px;
+        padding: 3px;
+        border-radius: 3px;
+        font-weight: 700;
+    }
+    .not_authed{
+        background-color: rgb(85, 85, 85); color: white;
+        position: absolute;
+        left: 7px;
+        bottom: 12px;
+        padding: 3px;
+        border-radius: 3px;
+        font-weight: 700;
+    }
+    .items{
+        float: left;
+        margin-left: 10px;
+        background-color: rgba(107, 107, 107, 0.15);
+        height: 219px;
+        width: 180px;
+        margin-bottom: 10px;
+        position: relative;
+
+    }
+    .items .info .prod_name{
+        position: absolute;
+        top:162px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .items .info .prod_price{
+        position: absolute;
+        top:180px;
+        font-size: 15px;
+        font-weight: 600;        
+    } 
+    .items .prod {
+        position: relative;
+        left: 10px;
+        top:10px;
+    }
+</style>
+</html>
